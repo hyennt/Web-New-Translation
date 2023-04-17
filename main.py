@@ -2,8 +2,8 @@ import requests
 from bs4 import BeautifulSoup
 
 def crawlContent(nPage):
-    url = "https://vnexpress.net/"
     for i in range(nPage):
+        url = "https://vnexpress.net"
         req = requests.get(url)
         soup = BeautifulSoup(req.content, "html.parser", from_encoding='utf-8')
 
@@ -25,10 +25,9 @@ def crawlContent(nPage):
 
             print("Title:", title)
             print("Content:", content)
-            # print("\n")#
         break
         #update the URL to crawl the next page
-        #url = soup.select_one('.next-page')['href']
+        url = soup.select_one('.next-page')['href']
 
 
-crawlContent(1)
+crawlContent(5)
