@@ -124,4 +124,4 @@ def crawlContent(nPage):
     save_to_file('English', title, content, translated_string)
 
 if __name__ == "__main__":
-    crawlContent(2)
+    crawlContent(1)
