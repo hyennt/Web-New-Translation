@@ -23,7 +23,9 @@ def split_text(text, max_len):
 
 # Define a function to translate a given text into a target language using OpenAI's GPT
 def translate(lang, text):
-    key = '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'
+    #key = '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'
+    #key = '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'
+    key = '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'
     openai.api_key = key
     print("Translating to:", lang)
     print("Please wait ... ")
@@ -64,7 +66,7 @@ def save_to_file(lang,title, content, content_trans):
 
 # Define a function to crawl content from a given number of pages on a website, translate the content,
 # and output the translated text into a PDF file
-def crawlContent(nPage):
+def crawlContent(nPage,lang):
     url = "https://vnexpress.net"
 
     req = requests.get(url)
@@ -92,7 +94,7 @@ def crawlContent(nPage):
         # split content into chunks of 1000 tokens or less and translate each chunk
         chunk_size = 1000
         chunks = [string[i:i + chunk_size] for i in range(0, len(string), chunk_size)]
-        translated_chunks = [translate('English', chunk) for chunk in chunks]
+        translated_chunks = [translate(lang, chunk) for chunk in chunks]
 
         # join the translated chunks into a single string
         translated_text = ''.join(translated_chunks)
@@ -109,7 +111,7 @@ def crawlContent(nPage):
 
             # Translate each chunk
             for chunk in chunks:
-                translated_chunk = translate('English', chunk)
+                translated_chunk = translate(lang, chunk)
                 translated_chunks.append(translated_chunk)
 
             # Combine the translated chunks into a single string
@@ -121,7 +123,9 @@ def crawlContent(nPage):
             print('\n')
 
             # Write the translated text to a PDF file
-    save_to_file('English', title, content, translated_string)
+    save_to_file(lang, title, content, translated_string)
 
 if __name__ == "__main__":
-    crawlContent(2)
+    lang = input("Enter language to translate: ")
+    crawlContent(1,lang)
+    print ("Done translation")
