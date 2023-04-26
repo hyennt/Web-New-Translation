@@ -2,7 +2,7 @@ import requests
 import openai
 from bs4 import BeautifulSoup
 
-# Define a function to split text into chunks of a given maximum length
+# Split text into small token in order to handle large data content
 def split_text(text, max_len):
     # Split the text into words
     words = text.split()
@@ -51,6 +51,7 @@ def translate(lang, text):
     translated_text = " ".join(translated_chunks)
     return translated_text
 
+# Define output in to txt file
 def save_to_file(lang,title, content, content_trans):
     f = open('Data.txt', 'w', encoding="utf-8")
     f.write("Title: ")
@@ -65,7 +66,6 @@ def save_to_file(lang,title, content, content_trans):
     f.close()
 
 # Define a function to crawl content from a given number of pages on a website, translate the content,
-# and output the translated text into a PDF file
 def crawlContent(nPage,lang):
     url = "https://vnexpress.net"
 
@@ -122,10 +122,10 @@ def crawlContent(nPage,lang):
             print(translated_string)
             print('\n')
 
-            # Write the translated text to a PDF file
+            # Write the translated text to a txt file
     save_to_file(lang, title, content, translated_string)
 
 if __name__ == "__main__":
     lang = input("Enter language to translate: ")
-    crawlContent(1,lang)
+    crawlContent(1, lang)
     print ("Done translation")
